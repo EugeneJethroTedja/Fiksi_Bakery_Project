@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, FloatingLabel, Button, Alert } from "react-bootstrap";
 import { toast } from "sonner";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; 
 
 const FormLogin = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({ username: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,8 +20,8 @@ const FormLogin = () => {
     if (user.username === "" || user.password === "") {
       toast.error("Username dan Password Tidak Boleh Kosong!");
       return;
-    } else if (user.password.length !== 5 ||user.username !== "Leontius" ||user.password !== "11231") {
-      toast.error("Username dan Password harus 5 digit dan sama dengan 11231!");
+    } else if (user.password.length !== 5 || user.username !== "Eugene" || user.password !== "11908") {
+      toast.error("Username dan Password harus 5 digit dan sama dengan 11908!");
       return;
     } else {
       const newUser = {
@@ -40,11 +42,31 @@ const FormLogin = () => {
         <strong>Info:</strong> Username harus dengan nama depan dan password harus 5 digit NPM
       </Alert>
       <FloatingLabel controlId="floatingInput" label="Username" className="mb-3">
-        <Form.Control type="text" placeholder="name@example.com" name="username"  onChange={handleChange}/>
+        <Form.Control
+          type="text"
+          placeholder="name@example.com"
+          name="username"
+          onChange={handleChange}
+        />
       </FloatingLabel>
-      <FloatingLabel controlId="floatingPassword" label="Password">
-        <Form.Control  type="password"  placeholder="password"  name="password"  onChange={handleChange}  autoComplete="off"/>
-      </FloatingLabel>
+      <div className="position-relative mb-3">
+        <FloatingLabel controlId="floatingPassword" label="Password">
+          <Form.Control
+            type={showPassword ? "text" : "password"} 
+            placeholder="password"
+            name="password"
+            onChange={handleChange}
+            autoComplete="off"
+          />
+        </FloatingLabel>
+        <span
+          className="position-absolute top-50 end-0 translate-middle-y me-3"
+          style={{ cursor: "pointer" }}
+          onClick={() => setShowPassword(!showPassword)} 
+        >
+          {showPassword ? <FaEyeSlash /> : <FaEye />} 
+        </span>
+      </div>
       <Button variant="primary" type="submit" className="mt-3 w-100">
         Login
       </Button>
